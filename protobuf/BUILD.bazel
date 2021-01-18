@@ -1,52 +1,50 @@
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/jimmyok/codelab
+gazelle(name = "gazelle")
 
 proto_library(
-    name = "tutorial_proto",
+    name = "addressbook_proto",
     srcs = ["addressbook.proto"],
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:timestamp_proto"],
 )
 
 go_proto_library(
-    name = "tutorial_go_proto",
-    importpath = "github.com/jimmyok/codelab/protobuf",
-    proto = ":tutorial_proto",
+    name = "addressbook_go_proto",
+    importpath = "github.com/jimmyok/codelab/protobuf/addressbook",
+    proto = ":addressbook_proto",
     visibility = ["//visibility:public"],
 )
 
 go_library(
-    name = "lib",
+    name = "protobuf_lib",
     srcs = ["listpeople.go"],
-    embed = [":tutorial_go_proto"],
-    importpath = "",
+    embed = [":addressbook_go_proto"],
+    importpath = "github.com/jimmyok/codelab/protobuf",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_golang_protobuf//proto:go_default_library",
-        "@com_github_jimmyok_codelab//protobuf/examples/tutorial:go_default_library",
+        "@com_github_jimmyok_codelab//protobuf/addressbook:go_default_library",
     ],
 )
 
 go_binary(
     name = "protobuf",
-    embed = [":protobuf_lib"],
+    embed = [":codelab_lib"],
     visibility = ["//visibility:public"],
 )
 
-load("@bazel_gazelle//:def.bzl", "gazelle")
-
-# gazelle:prefix github.com/jimmyok/codelab/protobuf
-gazelle(name = "gazelle")
-
 go_library(
-    name = "protobuf_lib",
+    name = "codelab_lib",
     srcs = ["listpeople.go"],
-    embed = [":tutorial_go_proto"],
-    importpath = "github.com/jimmyok/codelab/protobuf",
+    importpath = "github.com/jimmyok/codelab",
     visibility = ["//visibility:private"],
     deps = [
+        ":protobuf_lib",
         "@com_github_golang_protobuf//proto:go_default_library",
-        "@com_github_jimmyok_codelab//protobuf/tutorial:go_default_library",
     ],
 )

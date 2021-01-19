@@ -1,3 +1,0 @@
-startup --output_base=/tmp/codelab/bazel-root
-build --color=yes --symlink_prefix=/tmp/codelab/ --experimental_no_product_name_out_symlink
-

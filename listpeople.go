@@ -9,7 +9,7 @@ import (
 
 	"github.com/golang/protobuf/proto"
 
-	pb "github.com/jimmyok/codelab/protobuf/addressbook"
+	pb "github.com/jimmyok/codelab/addressbook"
 )
 
 func writePerson(w io.Writer, p *pb.Person) {

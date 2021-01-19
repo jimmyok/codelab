@@ -1,8 +1,22 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/jimmyok/codelab
 gazelle(name = "gazelle")
 
+go_library(
+    name = "codelab_lib",
+    srcs = ["listpeople.go"],
+    importpath = "github.com/jimmyok/codelab",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//proto:addressbook",
+        "@com_github_golang_protobuf//proto:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "codelab",
+    embed = [":codelab_lib"],
+    visibility = ["//visibility:public"],
+)

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package addressbook;
 
-option go_package = "github.com/jimmyok/codelab/protobuf/addressbook";
+option go_package = "addressbook";
 
 import "google/protobuf/timestamp.proto";
 

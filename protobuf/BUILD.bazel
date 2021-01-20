@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "protobuf_lib",
+    srcs = ["listpeople.go"],
+    importpath = "github.com/jimmyok/codelab/protobuf",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//protobuf/proto:addressbook",
+        "@com_github_golang_protobuf//proto:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "protobuf",
+    embed = [":protobuf_lib"],
+    visibility = ["//visibility:public"],
+)

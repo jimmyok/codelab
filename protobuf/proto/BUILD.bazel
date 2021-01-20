@@ -15,7 +15,7 @@ proto_library(
 
 go_proto_library(
     name = "addressbook_go_proto",
-    importpath = "github.com/jimmyok/codelab/proto/addressbook",
+    importpath = "github.com/jimmyok/codelab/protobuf/proto/addressbook",
     proto = ":addressbook_proto",
     visibility = ["//visibility:public"],
 )
@@ -23,6 +23,6 @@ go_proto_library(
 go_library(
     name = "addressbook",
     embed = [":addressbook_go_proto"],
-    importpath = "github.com/jimmyok/codelab/proto/addressbook",
+    importpath = "github.com/jimmyok/codelab/protobuf/proto/addressbook",
     visibility = ["//visibility:public"],
 )
